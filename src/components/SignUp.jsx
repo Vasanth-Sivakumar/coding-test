@@ -1,18 +1,18 @@
-import React, { useState  } from "react";
+import React, { useState } from "react";
 import "../css/main.css";
-import {Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  
+
   const navigate = useNavigate();
 
   const handleSignUp = (e) => {
     e.preventDefault();
-  
-    // To Perform CS validation
+
+    // To Perform Client Side validation
     if (
       email.trim() === "" ||
       password.trim() === "" ||
@@ -21,50 +21,28 @@ function SignUp() {
       alert("Please fill in all fields");
       return;
     }
-  
+
     if (password !== confirmPassword) {
       alert("Password must match");
       return;
     }
-  
+
     const newUser = { email, password };
     const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-  
-    // Check if the user already exists in Local Storage
+
+    // To Check if the user already exists in Local Storage
     const isExistingUser = existingUsers.some(
       (user) => user.email === newUser.email
     );
-  
+
     if (isExistingUser) {
       alert("Account already exists with this email.");
       return;
     }
-  
+
     const updatedUsers = [...existingUsers, newUser];
     localStorage.setItem("users", JSON.stringify(updatedUsers));
-  
-    // Fetch product data
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://raw.githubusercontent.com/abdulbitcot/React-Coding-Challenge-Experience/main/sample.json"
-        );
-        const data = await response.json();
-  
-        // Save user details and product data in the same object
-        // const userWithProductData = {
-        //   user: newUser,
-        //   productList: data,
-        // };
-        
-        localStorage.setItem("productList", JSON.stringify(data));
-      } catch (error) {
-        console.log("Error fetching data:", error);
-      }
-    };
-  
-    fetchData();
-  
+
     alert("Account Successfully Created");
     navigate("/login");
   };

@@ -323,7 +323,7 @@ const Product = () => {
                             product.category === selectedCategory
                         )
                         .map((product, index) => (
-                          <tr key={toString(product.id)}>
+                          <tr key={product.id}>
                             <td>
                               <label className="checkbox_container text-uppercase">
                                 {product.id}
